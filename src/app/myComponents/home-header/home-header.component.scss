@@ -1,0 +1,40 @@
+img{
+    height: 98%;
+    width:118%;
+    opacity: 0.85;
+    position:relative;
+
+}
+
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 40%, 0);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  
+  .fadeInUp {
+    animation-name: fadeInUp;
+  }
+
+  span{
+    display: flex;
+	color: brown;
+  }
+  .homie {
+    position: relative;
+    animation-name: fadeInUp;
+    animation-duration: 2s;
+  }
+
+  .xyz{
+    padding-top: 20%; 
+    padding-left: 7%;
+  }
+
+  

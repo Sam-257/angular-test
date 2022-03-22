@@ -1,0 +1,48 @@
+<div class = "container pt-5">
+    <div class="card">
+        <div class="card-header bg-dark">
+            <div class="mx-auto text-light">
+                <h3>Events List</h3>
+            </div>
+        </div>
+        <div class="card-body border-bottom" *ngFor="let event of events  | paginate: {id: 'pagi', itemsPerPage: 10, currentPage: page,totalItems: totalLength }">
+            <div class="row">
+                <div class="col-10">
+                    <h5 class="card-title">{{event.title}}</h5>
+                    <p class="card-text"><cite>{{event.description}}</cite>....</p>
+                </div>
+                <div class="col-2 pt-2">
+                    <button name="" id="" class="btn btn-danger" href="#" role="button" (click)="deleteClicked(event)">Delete</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-6">
+                    <pagination-controls id = 'pagi' (pageChange)="page = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="pt-5">
+    <table class="table table-hover table-light table-bordered table-responsive">
+        <thead class="thead-inverse">
+            <tr class="table-dark">
+                <th> S.No</th>
+                <th> Title</th>
+                <th> Description</th>
+                <th> Active</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let event of events">
+                    <td scope="row">{{event.sno}}</td>
+                    <td>{{event.title}}</td>
+                    <td>{{event.description}}</td>
+                </tr>
+            </tbody>
+    </table>
+</div> -->

@@ -14,6 +14,9 @@ import { LoginComponent } from './myComponents/login/login.component';
 import { GalleryComponent } from './myComponents/gallery/gallery.component';
 import { HomeHeaderComponent } from './myComponents/home-header/home-header.component';
 import { HomeCardsComponent } from './myComponents/home-cards/home-cards.component';
+import { CarouselComponent } from './myComponents/carousel/carousel.component';
+import { NextDirective } from './myComponents/carousel/next.directive';
+import { PrevDirective } from './myComponents/carousel/prev.directive';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { HomeCardsComponent } from './myComponents/home-cards/home-cards.compone
     LoginComponent,
     GalleryComponent,
     HomeHeaderComponent,
-    HomeCardsComponent
+    HomeCardsComponent,
+    CarouselComponent,
+    NextDirective,
+    PrevDirective
   ],
   imports: [
     BrowserModule,

@@ -1,13 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from '../../Event'
 import { SiblingEventService } from '../sibling-event.service';
+import { ApiService } from '../api.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+
 @Component({
   selector: 'app-view-events',
   templateUrl: './view-events.component.html',
   styleUrls: ['./view-events.component.scss']
 })
+
 export class ViewEventsComponent implements OnInit {
+  totalLength: number;
+  page: number = 1;
+  events:any;
+  constructor(private apiService: ApiService) { }
+  
+  ngOnInit(): void{
+    this.apiService.getData().subscribe((res)=>{
+      //console.log(res);
+      this.events = res.data;
+    });
+  }
+  
+  deleteClicked(sno:any){
+    this.apiService.deleteData(sno).subscribe((res)=>{
+      console.log(res);
+      this.apiService.getData().subscribe((res)=>{
+        //console.log(res);
+        this.events = res.data;
+      });
+    });
+  }
+
+}
+
+
+
+/*export class ViewEventsComponent implements OnInit {
   localItem: string | null;
   totalLength: number;
   page: number = 1;
@@ -45,4 +75,4 @@ export class ViewEventsComponent implements OnInit {
     localStorage.setItem("events",JSON.stringify(this.events));
   }
 
-}
+}*/

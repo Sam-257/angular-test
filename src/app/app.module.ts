@@ -9,7 +9,8 @@ import { AddEventComponent } from './myComponents/add-event/add-event.component'
 import { NavBarComponent } from './common/nav-bar/nav-bar.component';
 import { FormsModule } from '@angular/forms';
 import { SiblingEventService } from './myComponents/sibling-event.service';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { ApiService } from './myComponents/api.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { LoginComponent } from './myComponents/login/login.component';
 import { GalleryComponent } from './myComponents/gallery/gallery.component';
 import { HomeHeaderComponent } from './myComponents/home-header/home-header.component';
@@ -17,6 +18,7 @@ import { HomeCardsComponent } from './myComponents/home-cards/home-cards.compone
 import { CarouselComponent } from './myComponents/carousel/carousel.component';
 import { NextDirective } from './myComponents/carousel/next.directive';
 import { PrevDirective } from './myComponents/carousel/prev.directive';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -37,9 +39,10 @@ import { PrevDirective } from './myComponents/carousel/prev.directive';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    HttpClientModule
   ],
-  providers: [SiblingEventService],
+  providers: [SiblingEventService,ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

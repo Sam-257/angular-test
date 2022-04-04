@@ -24,8 +24,9 @@ export class AddEventComponent implements OnInit {
       'title': this.title,
       'description': this.description
     };
-    this.apiService.addData(event).subscribe((res)=>{
-      console.log(res);
+    this.apiService.addData(event).subscribe({
+      next:(res)=>console.log(res),
+      error:(err)=>console.error(err)
     });
   }
   

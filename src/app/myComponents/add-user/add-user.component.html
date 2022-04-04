@@ -1,0 +1,52 @@
+<div class="row pt-5 m-0">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h3>Add User</h3>
+            </div>
+            <div class="card-body">
+                <!-- Using reactive forms and validators -->
+                <form [formGroup] = 'userForm' (ngSubmit)="newUserSubmit()">
+                    <div class="form-group p-3">
+                        <label for="name">Name:</label>
+                        <input type="text" name="name" id="name" class="form-control"
+                            formControlName='name' placeholder="Enter your name" aria-describedby="helpId">
+                        <small id="helpId" *ngIf = "name && name.touched && name.invalid" class="text-danger">Name is required</small>
+                    </div>
+                    <div class="form-group p-3">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" id="email" class="form-control"
+                        formControlName='email' placeholder="Enter your email" aria-describedby="helpId">
+                        <small id="helpId" *ngIf = "email && email.touched && email.invalid" class="text-danger">Enter valid email</small>
+                    </div>
+                    <div class="form-group p-3">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" id="password" class="form-control"
+                        formControlName='password' placeholder="Enter your password" aria-describedby="helpId">
+                        <small id="helpId" *ngIf ="password && password.touched && password.invalid" class="text-danger">Enter a password</small>
+                    </div>
+                    <div class="form-group p-3">
+                        <label for="confirmPassword">Confirm Password:</label>
+                        <input type="password" name="confirmPassword" id="confirmPassword" class="form-control"
+                        formControlName='confirmPassword' placeholder="Confirm your password" aria-describedby="helpId">
+                        <small id="helpId" *ngIf ="confirmPassword && confirmPassword.touched && confirmPassword.invalid; else elseBlock" class="text-danger">Fill this field</small>
+                        <ng-template #elseBlock>
+                            <small id="helpId" *ngIf ="confirmPassword && password && confirmPassword.touched && password.value != confirmPassword.value" class="text-danger">Passwords don't match</small>
+                        </ng-template>
+                    </div>
+                    <div class="form-group p-3">
+                        <label for="address">Address:</label>
+                        <textarea class="form-control" name="address" id="address"
+                            rows="3" formControlName='address' placeholder="Enter your current address"></textarea>
+                            <small id="helpId" *ngIf = "address && address.touched && address.invalid" class="text-danger">Address is required</small>
+                    </div>
+                    <div class="text-center pt-3">
+                        <button type="submit" [disabled] = "!userForm.valid" class="btn btn-primary text-center">Add</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-muted"></div>
+        </div>
+    </div>
+</div>

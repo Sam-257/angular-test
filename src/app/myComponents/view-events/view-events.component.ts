@@ -18,7 +18,6 @@ export class ViewEventsComponent implements OnInit {
   
   ngOnInit(): void{
     this.apiService.getData().subscribe((res)=>{
-      //console.log(res);
       this.events = res.data;
     });
   }

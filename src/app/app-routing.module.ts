@@ -6,6 +6,7 @@ import { AddEventComponent } from './myComponents/add-event/add-event.component'
 import { AddUserComponent } from './myComponents/add-user/add-user.component';
 import { ExampleComponent } from './myComponents/example/example.component';
 import { ViewEventsComponent } from './myComponents/view-events/view-events.component';
+import { ViewUsersComponent } from './myComponents/view-users/view-users.component';
 
 // const routes: Routes = [
 //   { path: 'home', component: ExampleComponent },
@@ -33,6 +34,10 @@ const routes: Routes = [
       {
         path: 'addUser',
         component: AddUserComponent
+      },
+      {
+        path: 'viewUsers',
+        component: ViewUsersComponent
       }
     ]
   }

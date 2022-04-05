@@ -12,7 +12,7 @@
                         <label for="name">Name:</label>
                         <input type="text" name="name" id="name" class="form-control"
                             formControlName='name' placeholder="Enter your name" aria-describedby="helpId">
-                        <small id="helpId" *ngIf = "name && name.touched && name.invalid" class="text-danger">Name is required</small>
+                        <small id="helpId" *ngIf = "name && name.touched && name.invalid" class="text-danger">Enter a valid name</small>
                     </div>
                     <div class="form-group p-3">
                         <label for="email">Email:</label>
@@ -24,7 +24,7 @@
                         <label for="password">Password:</label>
                         <input type="password" name="password" id="password" class="form-control"
                         formControlName='password' placeholder="Enter your password" aria-describedby="helpId">
-                        <small id="helpId" *ngIf ="password && password.touched && password.invalid" class="text-danger">Enter a password</small>
+                        <small id="helpId" *ngIf ="password && password.touched && password.invalid" class="text-danger">Enter a valid password</small>
                     </div>
                     <div class="form-group p-3">
                         <label for="confirmPassword">Confirm Password:</label>
@@ -40,6 +40,12 @@
                         <textarea class="form-control" name="address" id="address"
                             rows="3" formControlName='address' placeholder="Enter your current address"></textarea>
                             <small id="helpId" *ngIf = "address && address.touched && address.invalid" class="text-danger">Address is required</small>
+                    </div>
+                    <div class="form-group p-3">
+                        <label for="zipCode">Zip Code:</label>
+                        <input type="text" name="zipCode" id="zipCode" class="form-control"
+                            formControlName='zipCode' placeholder="Enter your Zip Code" aria-describedby="helpId">
+                        <small id="helpId" *ngIf = "zipCode && zipCode.touched && zipCode.invalid" class="text-danger">Enter a valid Zip Code</small>
                     </div>
                     <div class="text-center pt-3">
                         <button type="submit" [disabled] = "!userForm.valid" class="btn btn-primary text-center">Add</button>

@@ -25,6 +25,68 @@ db.connect((err) => {
     }
 });
 
+//API for user
+//Select Query
+app.get("/user",(re1,res) =>{
+    let qr = "SELECT * FROM users";
+    db.query(qr,(err,result) => {
+        if (err) throw err;
+        res.send({
+            data: result
+        })
+    });
+});
+// Insert query API
+app.post("/user", (req, res) => {
+    let name = req.body.name;
+    let email = req.body.email;
+    let password = req.body.password;
+    let address = req.body.address;
+    let zipCode = req.body.zipCode;
+    let qr = `INSERT INTO users(name, email, password, address, zipCode) VALUES ("${name}","${email}","${password}","${address}","${zipCode}")`;
+    db.query(qr, (err, result) => {
+        if (err) throw err;
+        console.log(result);
+        res.send({
+            message: "data Inserted",
+        });
+    });
+});
+
+//Update Query
+app.put("/user/:id",(req,res)=>{
+    let id = req.params.id;
+    let name = req.body.name;
+    let email = req.body.email;
+    let address = req.body.address;
+    let zipCode = req.body.zipCode;
+    let qr = `UPDATE users SET name = "${name}", email = "${email}", address = "${address}", zipCode = "${zipCode}" WHERE id = "${id}"`;
+    db.query(qr,(err,result) => {
+        if (err) throw err;
+        console.log(result);
+        res.send({
+            message: "data Updated"
+        })
+    });
+    
+});
+
+// Delete query
+app.delete("/user/:id", (req, res) => {
+    let id = req.params.id;
+    let qr = `DELETE FROM users WHERE id = '${id}'`;
+    db.query(qr, (err, result) => {
+        if (err) throw err;
+        res.send({
+            message: "data deleted",
+        });
+    });
+});
+
+
+
+
+// API for events---------------------------------------------
 // Select query API
 app.get("/event", (req, res) => {
     //console.log('getting event information');
@@ -40,6 +102,7 @@ app.get("/event", (req, res) => {
         }
     });
 });
+
 
 // Insert query API
 app.post("/event", (req, res) => {

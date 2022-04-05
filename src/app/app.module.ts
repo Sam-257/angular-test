@@ -22,6 +22,7 @@ import { PrevDirective } from './myComponents/carousel/prev.directive';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DemoInterceptor } from './demo.interceptor';
 import { AddUserComponent } from './myComponents/add-user/add-user.component';
+import { ViewUsersComponent } from './myComponents/view-users/view-users.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { AddUserComponent } from './myComponents/add-user/add-user.component';
     CarouselComponent,
     NextDirective,
     PrevDirective,
-    AddUserComponent
+    AddUserComponent,
+    ViewUsersComponent
   ],
   imports: [
     BrowserModule,

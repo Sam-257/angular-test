@@ -10,6 +10,7 @@ export class ApiService {
   constructor(private _http:HttpClient) { }
 
   apiurl = 'http://localhost:3002/event';
+  userAPIurl = 'http://localhost:3002/user';
 
   // get data (view-events)
   getData():Observable<any>{
@@ -27,6 +28,19 @@ export class ApiService {
     return this._http.delete(`${this.apiurl}/${sno}`);
   }
 
+  //User Data
+  getUserData():Observable<any>{
+    return this._http.get(`${this.userAPIurl}`);
+  }
+  addUserData(user:any):Observable<any>{
+    return this._http.post(`${this.userAPIurl}`,user);
+  }
+  updateUserData(id:any,user:any):Observable<any>{
+    return this._http.put(`${this.userAPIurl}/${id}`,user);
+  }
+  deleteUserData(id:any):Observable<any>{
+    return this._http.delete(`${this.userAPIurl}/${id}`);
+  }
 
 
 }

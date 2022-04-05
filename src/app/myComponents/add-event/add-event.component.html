@@ -1,27 +1,29 @@
 <div class="row pt-5 m-0">
-<div class="col-3"></div>
-<div class="col-6">
-<div class="card">
-    <div class="card-header bg-dark text-white"><h3>Add Event</h3></div>
-    <div class="card-body">
-        <form (ngSubmit)="onSubmit()" >
-            <div class="form-group pdt-4">
-                <label for=""  style="padding-bottom: 3px;">Event Title:</label>
-                <input type="text" name="title" id="title" [(ngModel)] = "title" class="form-control" placeholder="Add the Event" aria-describedby="helpId">
-                <!-- <small id="helpId" class="text-muted">Help text</small> -->
+    <div class="col-3"></div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h3>Add Event</h3>
             </div>
-            <div class="form-group" style="padding-top: 20px;">
-                <label for="">Description:</label>
-                <textarea class="form-control" name="description" id="description" [(ngModel)] = "description" rows="3" placeholder="Tell us more about the event"></textarea>
+            <div class="card-body">
+                <form (ngSubmit)="onSubmit()">
+                    <div class="form-group pdt-4">
+                        <label for="" style="padding-bottom: 3px;">Event Title:</label>
+                        <input type="text" name="title" id="title" [(ngModel)]="title" class="form-control"
+                            placeholder="Add the Event" aria-describedby="helpId">
+                        <!-- <small id="helpId" class="text-muted">Help text</small> -->
+                    </div>
+                    <div class="form-group" style="padding-top: 20px;">
+                        <label for="">Description:</label>
+                        <textarea class="form-control" name="description" id="description" [(ngModel)]="description"
+                            rows="3" placeholder="Tell us more about the event"></textarea>
+                    </div>
+                    <div class="text-center pt-4">
+                        <button type="submit" class="btn btn-primary text-center">Add</button>
+                    </div>
+                </form>
             </div>
-            <div class="text-center pt-4">
-                <button type="submit" class="btn btn-primary text-center">Add</button>
-            </div>
-        </form>
+            <div class="card-footer text-muted"></div>
+        </div>
     </div>
-    <div class="card-footer text-muted"></div>
 </div>
-</div>
-</div>
-
-

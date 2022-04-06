@@ -36,6 +36,10 @@ const routes: Routes = [
         component: AddUserComponent
       },
       {
+        path: 'addUser/:id',
+        component: AddUserComponent
+      },
+      {
         path: 'viewUsers',
         component: ViewUsersComponent
       }

@@ -27,7 +27,7 @@ db.connect((err) => {
 
 //API for user
 //Select Query
-app.get("/user",(re1,res) =>{
+app.get("/user",(req,res) =>{
     let qr = "SELECT * FROM users";
     db.query(qr,(err,result) => {
         if (err) throw err;
@@ -36,6 +36,19 @@ app.get("/user",(re1,res) =>{
         })
     });
 });
+
+// Select single data
+app.get("/user/:id",(req,res) =>{
+    let id = req.params.id;
+    let qr = `SELECT * FROM users WHERE id = "${id}"`;
+    db.query(qr,(err,result) => {
+        if (err) throw err;
+        res.send({
+            data: result
+        })
+    });
+});
+
 // Insert query API
 app.post("/user", (req, res) => {
     let name = req.body.name;

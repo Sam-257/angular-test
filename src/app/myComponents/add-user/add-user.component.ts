@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
+import { ActivatedRoute } from '@angular/router';
+import { zip } from 'rxjs';
 
 @Component({
   selector: 'app-add-user',
@@ -9,9 +11,28 @@ import { ApiService } from '../api.service';
 })
 export class AddUserComponent implements OnInit {
   user:any;
-  constructor(private apiService:ApiService) { }
+  getParamId: any;
+  updateValidator: boolean; //If value is changed, updateValidator becomes true and update button is enabled
+  constructor(private apiService:ApiService, private currRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.getParamId = this.currRoute.snapshot.paramMap.get('id');
+    this.apiService.getSingleUserData(this.getParamId).subscribe({
+      next:(res)=>{
+        //console.log(res.data[0]);
+        this.user = res.data[0]
+        this.userForm.patchValue({
+          name:this.user.name,
+          email:this.user.email,
+          password:this.user.password,
+          confirmPassword: this.user.password,
+          address:this.user.address,
+          zipCode: this.user.zipCode
+        })
+      },
+      error:(err)=>console.error(err)
+    })
+    this.updateValidator = true;
   }
 
   userForm = new FormGroup({
@@ -41,14 +62,28 @@ export class AddUserComponent implements OnInit {
   get zipCode(){
     return this.userForm.get('zipCode');
   }
-
-
+  
   newUserSubmit(){
-    console.log(this.userForm.value);
-    this.user = this.userForm.value;
-    this.apiService.addUserData(this.user).subscribe({
+    this.apiService.addUserData(this.userForm.value).subscribe({
       next:(res)=>console.log(res),
       error:(err)=>console.error(err)
     });
   }
+
+  // To check if the input value is actually changed or not
+  notChanged(){
+    if(this.user.name == this.name?.value && this.user.address == this.address?.value && this.user.zipCode == this.zipCode?.value){
+      this.updateValidator = true;
+    } else{
+      this.updateValidator = false;
+    }
+    console.log(this.updateValidator);
+  }
+  userEdit(){
+    this.apiService.updateUserData(this.getParamId,this.userForm.value).subscribe({
+      next:(res)=>console.log(res),
+      error:(err)=>console.error(err)
+    })
+  }
+
 }

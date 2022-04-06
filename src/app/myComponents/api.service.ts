@@ -32,6 +32,9 @@ export class ApiService {
   getUserData():Observable<any>{
     return this._http.get(`${this.userAPIurl}`);
   }
+  getSingleUserData(id:any):Observable<any>{
+    return this._http.get(`${this.userAPIurl}/${id}`);
+  }
   addUserData(user:any):Observable<any>{
     return this._http.post(`${this.userAPIurl}`,user);
   }

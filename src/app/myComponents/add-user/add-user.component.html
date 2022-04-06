@@ -3,30 +3,31 @@
     <div class="col-6">
         <div class="card">
             <div class="card-header bg-dark text-white">
-                <h3>Add User</h3>
+                <h3 *ngIf= "!getParamId">Add User</h3>
+                <h3 *ngIf= "getParamId">Edit User</h3>
             </div>
             <div class="card-body">
                 <!-- Using reactive forms and validators -->
-                <form [formGroup] = 'userForm' (ngSubmit)="newUserSubmit()">
+                <form [formGroup] = 'userForm'>
                     <div class="form-group p-3">
                         <label for="name">Name:</label>
                         <input type="text" name="name" id="name" class="form-control"
-                            formControlName='name' placeholder="Enter your name" aria-describedby="helpId">
+                            formControlName='name' placeholder="Enter your name" aria-describedby="helpId" (change)= "notChanged()">
                         <small id="helpId" *ngIf = "name && name.touched && name.invalid" class="text-danger">Enter a valid name</small>
                     </div>
-                    <div class="form-group p-3">
+                    <div class="form-group p-3" *ngIf= "!getParamId">
                         <label for="email">Email:</label>
                         <input type="email" name="email" id="email" class="form-control"
                         formControlName='email' placeholder="Enter your email" aria-describedby="helpId">
                         <small id="helpId" *ngIf = "email && email.touched && email.invalid" class="text-danger">Enter valid email</small>
                     </div>
-                    <div class="form-group p-3">
+                    <div class="form-group p-3" *ngIf= "!getParamId">
                         <label for="password">Password:</label>
                         <input type="password" name="password" id="password" class="form-control"
                         formControlName='password' placeholder="Enter your password" aria-describedby="helpId">
                         <small id="helpId" *ngIf ="password && password.touched && password.invalid" class="text-danger">Enter a valid password</small>
                     </div>
-                    <div class="form-group p-3">
+                    <div class="form-group p-3" *ngIf= "!getParamId">
                         <label for="confirmPassword">Confirm Password:</label>
                         <input type="password" name="confirmPassword" id="confirmPassword" class="form-control"
                         formControlName='confirmPassword' placeholder="Confirm your password" aria-describedby="helpId">
@@ -38,17 +39,20 @@
                     <div class="form-group p-3">
                         <label for="address">Address:</label>
                         <textarea class="form-control" name="address" id="address"
-                            rows="3" formControlName='address' placeholder="Enter your current address"></textarea>
+                            rows="3" formControlName='address' placeholder="Enter your current address" (change)= "notChanged()"></textarea>
                             <small id="helpId" *ngIf = "address && address.touched && address.invalid" class="text-danger">Address is required</small>
                     </div>
                     <div class="form-group p-3">
                         <label for="zipCode">Zip Code:</label>
                         <input type="text" name="zipCode" id="zipCode" class="form-control"
-                            formControlName='zipCode' placeholder="Enter your Zip Code" aria-describedby="helpId">
+                            formControlName='zipCode' placeholder="Enter your Zip Code" aria-describedby="helpId" (change)= "notChanged()">
                         <small id="helpId" *ngIf = "zipCode && zipCode.touched && zipCode.invalid" class="text-danger">Enter a valid Zip Code</small>
                     </div>
-                    <div class="text-center pt-3">
-                        <button type="submit" [disabled] = "!userForm.valid" class="btn btn-primary text-center">Add</button>
+                    <div class="text-center pt-3" *ngIf= "!getParamId">
+                        <button type="submit" [disabled] = "!userForm.valid" class="btn btn-primary text-center" (click)= " newUserSubmit()">Add</button>
+                    </div>
+                    <div class="text-center pt-3" *ngIf= "getParamId">
+                        <button type="submit" [disabled] = "!userForm.valid || updateValidator" class="btn btn-secondary text-center" (click) = "userEdit()">Edit</button>
                     </div>
                 </form>
             </div>

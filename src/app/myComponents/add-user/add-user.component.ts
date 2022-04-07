@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
-import { ActivatedRoute } from '@angular/router';
-import { zip } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-user',
@@ -13,7 +12,8 @@ export class AddUserComponent implements OnInit {
   user:any;
   getParamId: any;
   updateValidator: boolean; //If value is changed, updateValidator becomes true and update button is enabled
-  constructor(private apiService:ApiService, private currRoute:ActivatedRoute) { }
+  
+  constructor(private apiService:ApiService, private currRoute:ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.getParamId = this.currRoute.snapshot.paramMap.get('id');
@@ -65,7 +65,10 @@ export class AddUserComponent implements OnInit {
   
   newUserSubmit(){
     this.apiService.addUserData(this.userForm.value).subscribe({
-      next:(res)=>console.log(res),
+      next:(res)=>{
+        console.log(res);
+        this.router.navigate(['/login']);
+      },
       error:(err)=>console.error(err)
     });
   }

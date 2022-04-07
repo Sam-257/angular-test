@@ -19,10 +19,6 @@ export class ViewUsersComponent implements OnInit {
     });
   }
   
-  editClicked(id:any){
-
-  }
-
   deleteClicked(id:any){
     this.apiService.deleteUserData(id).subscribe((res)=>{
       console.log(res);

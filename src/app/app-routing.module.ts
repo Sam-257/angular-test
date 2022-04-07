@@ -5,8 +5,10 @@ import { NavBarComponent } from './common/nav-bar/nav-bar.component';
 import { AddEventComponent } from './myComponents/add-event/add-event.component';
 import { AddUserComponent } from './myComponents/add-user/add-user.component';
 import { ExampleComponent } from './myComponents/example/example.component';
+import { LoginComponent } from './myComponents/login/login.component';
 import { ViewEventsComponent } from './myComponents/view-events/view-events.component';
 import { ViewUsersComponent } from './myComponents/view-users/view-users.component';
+import { AuthGuard } from './common/auth.guard';
 
 // const routes: Routes = [
 //   { path: 'home', component: ExampleComponent },
@@ -25,23 +27,32 @@ const routes: Routes = [
       },
       {
         path: 'viewEvents',
-        component: ViewEventsComponent
+        component: ViewEventsComponent,
+        canActivate: [AuthGuard]
       },
+      {
+        path:'login',
+        component: LoginComponent
+      },
+      
       {
         path: 'addEvent',
-        component: AddEventComponent
+        component: AddEventComponent,
+        canActivate: [AuthGuard]
       },
       {
-        path: 'addUser',
+        path: 'register',
         component: AddUserComponent
       },
       {
-        path: 'addUser/:id',
-        component: AddUserComponent
+        path: 'register/:id',
+        component: AddUserComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'viewUsers',
-        component: ViewUsersComponent
+        component: ViewUsersComponent,
+        canActivate: [AuthGuard]
       }
     ]
   }

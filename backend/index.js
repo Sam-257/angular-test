@@ -2,6 +2,7 @@ const express = require("express");
 const bodyparser = require("body-parser");
 const cors = require("cors");
 const mysql = require("mysql2");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 app.use(cors());
@@ -25,13 +26,70 @@ db.connect((err) => {
     }
 });
 
+function verifyToken(req,res,next){
+    if(!req.headers.authorization){
+        return res.status(401).send({
+            message: "Unauthorized RequestAccess"
+        })
+    }
+    let token = req.headers.authorization.split(' ')[1];
+    if(token === 'null'){
+        return res.status(401).send({
+            message: "Unauthorized RequestAccess"
+        });
+    }
+    let payload = jwt.verify(token,'secretKey');
+    if(!payload){
+        return res.status(401).send({
+            message: "Unauthorized RequestAccess"
+        });
+    }
+    next();
+}
+
+
+// API for login
+
+app.post("/login",(req,res)=>{
+    let email = req.body.email;
+    let password = req.body.password;
+    let qr = `SELECT id,password FROM users WHERE email = "${ email }"`
+    db.query(qr,(err,result)=>{
+        if (err) throw err;
+        if(result.length == 0){
+            res.status(401).send({
+                message: "Invalid email",
+                auth: false
+            })
+        } else if (result[0].password != password){
+            //console.log(result[0].password);
+            res.status(401).send({
+                message: 'Invalid Password',
+                auth: false
+            })
+        } else{
+            let payload = {subject: result[0].id};
+            let Bearer = jwt.sign(payload,'secretKey');
+            res.status(200).send({
+                message: 'Allow login',
+                auth: true,
+                Bearer,
+                id: result[0].id
+
+            })
+        }
+
+    })
+})
+
+
 //API for user
 //Select Query
 app.get("/user",(req,res) =>{
     let qr = "SELECT * FROM users";
     db.query(qr,(err,result) => {
         if (err) throw err;
-        res.send({
+        res.status(200).send({
             data: result
         })
     });
@@ -43,7 +101,7 @@ app.get("/user/:id",(req,res) =>{
     let qr = `SELECT * FROM users WHERE id = "${id}"`;
     db.query(qr,(err,result) => {
         if (err) throw err;
-        res.send({
+        res.status(200).send({
             data: result
         })
     });
@@ -60,7 +118,7 @@ app.post("/user", (req, res) => {
     db.query(qr, (err, result) => {
         if (err) throw err;
         console.log(result);
-        res.send({
+        res.status(200).send({
             message: "data Inserted",
         });
     });
@@ -77,7 +135,7 @@ app.put("/user/:id",(req,res)=>{
     db.query(qr,(err,result) => {
         if (err) throw err;
         console.log(result);
-        res.send({
+        res.status(200).send({
             message: "data Updated"
         })
     });
@@ -90,7 +148,7 @@ app.delete("/user/:id", (req, res) => {
     let qr = `DELETE FROM users WHERE id = '${id}'`;
     db.query(qr, (err, result) => {
         if (err) throw err;
-        res.send({
+        res.status(200).send({
             message: "data deleted",
         });
     });
@@ -101,7 +159,7 @@ app.delete("/user/:id", (req, res) => {
 
 // API for events---------------------------------------------
 // Select query API
-app.get("/event", (req, res) => {
+app.get("/event",verifyToken, (req, res) => {
     //console.log('getting event information');
     let qr = "SELECT * FROM events";
     db.query(qr, (err, result) => {
@@ -109,7 +167,7 @@ app.get("/event", (req, res) => {
             console.error(err, "error in select query");
         }
         if (result.length > 0) {
-            res.send({
+            res.status(200).send({
                 data: result,
             });
         }
@@ -118,12 +176,12 @@ app.get("/event", (req, res) => {
 
 
 // Insert query API
-app.post("/event", (req, res) => {
+app.post("/event",verifyToken, (req, res) => {
     let title = req.body.title;
     let description = req.body.description;
     let active = 1;
     if (title == undefined || description == undefined) {
-        res.send({
+        res.status(401).send({
             message: "Invalid Data",
         });
     } else {
@@ -131,7 +189,7 @@ app.post("/event", (req, res) => {
         db.query(qr, (err, result) => {
             if (err) throw err;
             console.log(result);
-            res.send({
+            res.status(200).send({
                 message: "data Inserted",
             });
         });
@@ -139,12 +197,12 @@ app.post("/event", (req, res) => {
 });
 
 // Delete query
-app.delete("/event/:sno", (req, res) => {
+app.delete("/event/:sno",verifyToken, (req, res) => {
     let sno = req.params.sno;
     let qr = `DELETE FROM events WHERE sno = '${sno}'`;
     db.query(qr, (err, result) => {
         if (err) throw err;
-        res.send({
+        res.status(200).send({
             message: "data deleted",
         });
     });

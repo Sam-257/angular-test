@@ -11,7 +11,9 @@ export class ApiService {
 
   apiurl = 'http://localhost:3002/event';
   userAPIurl = 'http://localhost:3002/user';
+  loginAPIurl = 'http://localhost:3002/login';
 
+  // Events
   // get data (view-events)
   getData():Observable<any>{
     return this._http.get(`${this.apiurl}`);
@@ -45,5 +47,13 @@ export class ApiService {
     return this._http.delete(`${this.userAPIurl}/${id}`);
   }
 
+  //Login
+  loginUser(credentials:any):Observable<any>{
+    return this._http.post(`${this.loginAPIurl}`,credentials);
+  }
+
+  loggedIn(){
+    return !!localStorage.getItem('Bearer');
+  }
 
 }

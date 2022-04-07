@@ -1,1 +1,37 @@
-
+<div class="container-fluid">
+  <div class="row pt-5 m-0">
+    <div class="col-3"></div>
+    <div class="col-6">
+      <div class="card">
+        <div class="card-header bg-dark text-white">
+          <h3>Login</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]= "loginForm">
+            <div class="form-group p-3">
+              <label for="email">Email:</label>
+              <input type="email" name="email" id="email" class="form-control" formControlName="email"
+                placeholder="Enter your email" aria-describedby="helpId" />
+            </div>
+            <div class="form-group p-3">
+              <label for="password">Password:</label>
+              <input type="password" name="password" id="password" class="form-control" formControlName="password"
+                placeholder="Enter your password" aria-describedby="helpId" />
+            </div>
+            <div class = 'help'>
+              <small id="helpId" class="text-danger" *ngIf= "email && email.touched && password && password.touched && correctCred == false">Enter valid email and password</small>
+            </div>
+            <div class="text-center pt-3">
+              <button type="submit" class="btn btn-secondary text-center" (click) = 'loginClicked()'>
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-center text-muted">
+          New User ? <a [routerLink]= "['/register']" class="text-primary linki">Register Here</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -23,6 +23,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DemoInterceptor } from './demo.interceptor';
 import { AddUserComponent } from './myComponents/add-user/add-user.component';
 import { ViewUsersComponent } from './myComponents/view-users/view-users.component';
+import { AuthGuard } from './common/auth.guard';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ViewUsersComponent } from './myComponents/view-users/view-users.compone
   providers: [
     SiblingEventService,
     ApiService,
+    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: DemoInterceptor,

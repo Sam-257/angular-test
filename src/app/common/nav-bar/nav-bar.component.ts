@@ -17,7 +17,7 @@ export class NavBarComponent implements OnInit {
 
   edit(){
     this.userId = localStorage.getItem('id');
-    this.router.navigate(['/register',this.userId]);
+    this.router.navigate(['/edit',this.userId]);
   }
   logout(){
     localStorage.removeItem('Bearer');

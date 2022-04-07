@@ -80,7 +80,6 @@ export class AddUserComponent implements OnInit {
     } else{
       this.updateValidator = false;
     }
-    console.log(this.updateValidator);
   }
   userEdit(){
     this.apiService.updateUserData(this.getParamId,this.userForm.value).subscribe({

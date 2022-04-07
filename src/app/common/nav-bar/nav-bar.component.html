@@ -25,7 +25,7 @@
         </ul>
         <ul class="navbar-nav log" *ngIf= "apiService.loggedIn()">
             <li class="nav-item">
-                <a [routerLink]= "['/register',userId]"  class="nav-link">Edit Profile</a>
+                <a (click)= "edit()"  class="nav-link">Edit Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" (click) = "logout()">Logout</a>

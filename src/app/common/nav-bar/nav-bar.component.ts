@@ -8,12 +8,17 @@ import { ApiService } from 'src/app/myComponents/api.service';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-  userId:any = localStorage.getItem('id');
+  userId:any;
   constructor(public apiService:ApiService, private router:Router) { }
 
   ngOnInit(): void {
+    
   }
 
+  edit(){
+    this.userId = localStorage.getItem('id');
+    this.router.navigate(['/register',this.userId]);
+  }
   logout(){
     localStorage.removeItem('Bearer');
     localStorage.removeItem('id');

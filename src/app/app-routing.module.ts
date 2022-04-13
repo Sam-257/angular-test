@@ -47,7 +47,9 @@ const routes: Routes = [
         path: 'viewUsers',
         component: ViewUsersComponent,
         canActivate: [AuthGuard]
-      }
+      },
+      
+      
     ]
   }
 ];

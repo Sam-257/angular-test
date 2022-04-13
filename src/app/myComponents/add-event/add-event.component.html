@@ -1,6 +1,70 @@
 <div class="row pt-5 m-0">
     <div class="col-3"></div>
     <div class="col-6">
+        <form [formGroup]="eventForm" class="form-container">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Add Event </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row form-ele pt-4">
+                        <div class="col-md-11">
+                            <label>Title:</label>
+                            <mat-form-field class="full-width">
+                                <input formControlName="title" matInput placeholder="Enter Event Title" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row form-ele">
+                        <label>Description:</label>
+                        <div class="col-sm-11">
+                            <mat-form-field class="full-width">
+                                <textarea formControlName="description" matInput placeholder="Mention a few words about the event"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row form-ele">
+                        <label>Event Start:</label>
+                        <div class="col-md-11">
+                            <mat-form-field class="full-width">
+                                <input formControlName="event_start" matInput [ngxMatDatetimePicker]="picker"
+                                    placeholder="Select Start Time" />
+                                <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+                                <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row form-ele">
+                        <label>Event End:</label>
+                        <div class="col-md-11">
+                            <mat-form-field class="full-width">
+                                <input formControlName="event_end" matInput [ngxMatDatetimePicker]="picker2"
+                                    placeholder="Select End Time" />
+                                <mat-datepicker-toggle matSuffix [for]="$any(picker2)"></mat-datepicker-toggle>
+                                <ngx-mat-datetime-picker #picker2></ngx-mat-datetime-picker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions class="text-center">
+                    <button (click)="onSubmit()" mat-raised-button>
+                        Add
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- <div class="row pt-5 m-0">
+    <div class="col-3"></div>
+    <div class="col-6">
         <div class="card">
             <div class="card-header bg-dark text-white">
                 <h3>Add Event</h3>
@@ -11,19 +75,32 @@
                         <label for="" style="padding-bottom: 3px;">Event Title:</label>
                         <input type="text" name="title" id="title" [(ngModel)]="title" class="form-control"
                             placeholder="Add the Event" aria-describedby="helpId">
-                        <!-- <small id="helpId" class="text-muted">Help text</small> -->
+                        <small id="helpId" class="text-muted">Help text</small> 
                     </div>
-                    <div class="form-group" style="padding-top: 20px;">
+                    <div class="form-group pt-4">
                         <label for="">Description:</label>
                         <textarea class="form-control" name="description" id="description" [(ngModel)]="description"
                             rows="3" placeholder="Tell us more about the event"></textarea>
                     </div>
+                    <div class="pt-4">
+                        <label for="">Time:</label>
+                        <input matInput [ngxMatDatetimePicker]= "picker" placeholder="Choose a date & time">
+                        
+                        <mat-datepicker-toggle matSuffix [for]= "$any(picker)"></mat-datepicker-toggle>
+                    
+                        <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+                    </div>
+
                     <div class="text-center pt-4">
                         <button type="submit" class="btn btn-primary text-center">Add</button>
                     </div>
                 </form>
+
+                
+
             </div>
-            <div class="card-footer text-muted"></div>
+            <div class="card-footer text-muted"></div> 
         </div>
+
     </div>
-</div>
+</div> -->

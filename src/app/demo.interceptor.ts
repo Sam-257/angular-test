@@ -13,7 +13,12 @@ export class DemoInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log(request);
-    return next.handle(request);
+    let authRequest = request.clone({
+      setHeaders:{
+        Authorization: `Bearer ${ localStorage.getItem('Bearer') }`
+      }
+    })
+    console.log(authRequest);
+    return next.handle(authRequest);
   }
 }

@@ -1,0 +1,26 @@
+<div class="container pt-5">
+    <table class="table table-hover table-light table-bordered table-responsive">
+        <thead class="thead-inverse text-center">
+            <tr class="table-dark">
+                <th> Id </th>
+                <th> Name </th>
+                <th> Email </th>
+                <th> Address </th>
+                <th> Zip Code </th>
+                <th> Edit </th>
+                <th> Delete </th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr *ngFor="let user of users">
+                    <td>{{user.id}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.address}} </td>
+                    <td>{{user.zipCode}}</td>
+                    <td><button name="" id="" class="btn btn-secondary" href="#" role="button" [routerLink]= "['/edit',user.id]">Edit</button></td>
+                    <td><button name="" id="" class="btn btn-danger" href="#" role="button" (click)="deleteClicked(user.id)">Delete</button></td>
+                </tr>
+            </tbody>
+    </table>
+</div>

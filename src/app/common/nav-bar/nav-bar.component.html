@@ -2,17 +2,33 @@
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <img src="../../../assets/static/images/logo.png" routerLink="/" />
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a routerLink="/home"  class="nav-link">Home</a>
             </li>
-            <li class="nav-item">
-                <a routerLink="/viewEvents" class="nav-link">View Events</a>
-            </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf= "apiService.loggedIn()">
                 <a routerLink="/addEvent"  class="nav-link">Add Event</a>
             </li>
+            <li class="nav-item" *ngIf= "apiService.loggedIn()">
+                <a routerLink="/viewEvents" class="nav-link">View Events</a>
+            </li>
+            <li class="nav-item" *ngIf= "apiService.loggedIn()">
+                <a routerLink="/viewUsers" class="nav-link">View Users</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav log" *ngIf= "!apiService.loggedIn()">
             <li class="nav-item">
-                <a routerLink="/addUser"  class="nav-link">Add User</a>
+                <a routerLink="/login"  class="nav-link">Login</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/register" class="nav-link">Register</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav log" *ngIf= "apiService.loggedIn()">
+            <li class="nav-item">
+                <a (click)= "edit()"  class="nav-link">Edit Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click) = "logout()">Logout</a>
             </li>
         </ul>
     </nav>

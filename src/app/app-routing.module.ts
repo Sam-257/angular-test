@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-//import { LoginComponent } from './myComponents/login/login.component';
 import { NavBarComponent } from './common/nav-bar/nav-bar.component';
 import { AddEventComponent } from './myComponents/add-event/add-event.component';
 import { AddUserComponent } from './myComponents/add-user/add-user.component';
 import { ExampleComponent } from './myComponents/example/example.component';
+import { LoginComponent } from './myComponents/login/login.component';
 import { ViewEventsComponent } from './myComponents/view-events/view-events.component';
+import { ViewUsersComponent } from './myComponents/view-users/view-users.component';
+import { AuthGuard } from './common/auth.guard';
 
-// const routes: Routes = [
-//   { path: 'home', component: ExampleComponent },
-//   { path: 'view', component: ViewEventsComponent },
-//   { path: 'add', component: AddEventComponent },
-// ];
 
 const routes: Routes = [
   {
@@ -24,15 +21,32 @@ const routes: Routes = [
       },
       {
         path: 'viewEvents',
-        component: ViewEventsComponent
+        component: ViewEventsComponent,
+        canActivate: [AuthGuard]
       },
+      {
+        path:'login',
+        component: LoginComponent
+      },
+      
       {
         path: 'addEvent',
-        component: AddEventComponent
+        component: AddEventComponent,
+        canActivate: [AuthGuard]
       },
       {
-        path: 'addUser',
+        path: 'register',
         component: AddUserComponent
+      },
+      {
+        path: 'edit/:id',
+        component: AddUserComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'viewUsers',
+        component: ViewUsersComponent,
+        canActivate: [AuthGuard]
       }
     ]
   }

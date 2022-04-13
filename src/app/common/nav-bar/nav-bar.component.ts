@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiService } from 'src/app/common/api.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -6,10 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-
-  constructor() { }
+  userId:any;
+  constructor(public apiService:ApiService, private router:Router) { }
 
   ngOnInit(): void {
+    
   }
 
+  edit(){
+    this.userId = localStorage.getItem('id');
+    this.router.navigate(['/edit',this.userId]);
+  }
+  logout(){
+    localStorage.removeItem('Bearer');
+    localStorage.removeItem('id');
+    this.router.navigate(['/login']);
+  }
+  
 }

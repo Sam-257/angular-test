@@ -15,8 +15,8 @@ export class ApiService {
 
   // Events
   // get data (view-events)
-  getData():Observable<any>{
-    return this._http.get(`${this.apiurl}`);
+  getData(user_id:any):Observable<any>{
+    return this._http.get(`${this.apiurl}/${user_id}`);
   }
 
   //add data (add-events)

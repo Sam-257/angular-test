@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-//import { LoginComponent } from './myComponents/login/login.component';
 import { NavBarComponent } from './common/nav-bar/nav-bar.component';
 import { AddEventComponent } from './myComponents/add-event/add-event.component';
 import { AddUserComponent } from './myComponents/add-user/add-user.component';
@@ -10,11 +9,6 @@ import { ViewEventsComponent } from './myComponents/view-events/view-events.comp
 import { ViewUsersComponent } from './myComponents/view-users/view-users.component';
 import { AuthGuard } from './common/auth.guard';
 
-// const routes: Routes = [
-//   { path: 'home', component: ExampleComponent },
-//   { path: 'view', component: ViewEventsComponent },
-//   { path: 'add', component: AddEventComponent },
-// ];
 
 const routes: Routes = [
   {

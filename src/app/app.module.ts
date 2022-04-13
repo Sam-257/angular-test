@@ -9,8 +9,7 @@ import { AddEventComponent } from './myComponents/add-event/add-event.component'
 import { NavBarComponent } from './common/nav-bar/nav-bar.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SiblingEventService } from './myComponents/sibling-event.service';
-import { ApiService } from './myComponents/api.service';
+import { ApiService } from './common/api.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LoginComponent } from './myComponents/login/login.component';
 import { GalleryComponent } from './myComponents/gallery/gallery.component';
@@ -24,6 +23,8 @@ import { DemoInterceptor } from './demo.interceptor';
 import { AddUserComponent } from './myComponents/add-user/add-user.component';
 import { ViewUsersComponent } from './myComponents/view-users/view-users.component';
 import { AuthGuard } from './common/auth.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -48,10 +49,11 @@ import { AuthGuard } from './common/auth.guard';
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
   ],
   providers: [
-    SiblingEventService,
     ApiService,
     AuthGuard,
     {

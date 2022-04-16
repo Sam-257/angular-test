@@ -19,6 +19,18 @@ export class ApiService {
     return this._http.get(`${this.apiurl}/${user_id}`);
   }
 
+  getBeforeEvents(user_id:any):Observable<any>{
+    return this._http.get(`${this.apiurl}/before/${user_id}`);
+  }
+
+  getOngoingEvents(user_id:any):Observable<any>{
+    return this._http.get(`${this.apiurl}/ongoing/${user_id}`);
+  }
+
+  getAfterEvents(user_id:any):Observable<any>{
+    return this._http.get(`${this.apiurl}/after/${user_id}`);
+  }
+
   //add data (add-events)
   addData(event:any):Observable<any>{
     //console.log(event,this.apiurl);

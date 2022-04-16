@@ -20,7 +20,6 @@ export class ViewEventsComponent implements OnInit {
     this.apiService.getData(this.user_id).subscribe((res)=>{
       this.events = res.data;
     });
-    
   }
   
   deleteClicked(sno:any){

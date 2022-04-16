@@ -35,6 +35,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
+import { GetEventsComponent } from './myComponents/get-events/get-events.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     PrevDirective,
     AddUserComponent,
     ViewUsersComponent,
+    GetEventsComponent,
     
   ],
   imports: [

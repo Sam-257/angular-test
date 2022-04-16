@@ -1,0 +1,111 @@
+<div class="container pt-5">
+    <div class="card">
+        <div class="card-header bg-dark text-center">
+            <div class="mx-auto text-light">
+                <h3>Upcoming Events</h3>
+            </div>
+        </div>
+        <div class="card-body border-bottom">
+            <div class="row">
+                <div class="col-md-4 mb-3" *ngFor="let beforeEvent of beforeEvents">
+                    <div class="card text-center">
+                        <h5 class="card-header">{{ beforeEvent.title }}</h5>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <cite>{{ beforeEvent.description }}</cite>
+                            </p>
+                            <div>
+                                <img src="../../../assets/static/images/calendar2-check-fill.svg" />
+                                {{ beforeEvent.event_start.split("T")[0] }}
+                                <img src="../../../assets/static/images/alarm-fill.svg" />
+                                {{ beforeEvent.event_start.split("T")[1].slice(0, 5) }}
+                            </div>
+                            <b> ---------------></b>
+                            <div>
+                                <img src="../../../assets/static/images/calendar2-check-fill.svg" />
+                                {{ beforeEvent.event_end.split("T")[0] }}
+                                <img src="../../../assets/static/images/alarm-fill.svg" />
+                                {{ beforeEvent.event_end.split("T")[1].slice(0, 5) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container pt-5">
+    <div class="card">
+        <div class="card-header bg-dark text-center">
+            <div class="mx-auto text-light">
+                <h3>Ongoing Events</h3>
+            </div>
+        </div>
+        <div class="card-body border-bottom">
+            <div class="row">
+                <div class="col-md-4 mb-3" *ngFor="let ongoingEvent of ongoingEvents">
+                    <div class="card text-center">
+                        <h5 class="card-header">{{ ongoingEvent.title }}</h5>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <cite>{{ ongoingEvent.description }}</cite>
+                            </p>
+                            <div>
+                                <img src="../../../assets/static/images/calendar2-check-fill.svg" />
+                                {{ ongoingEvent.event_start.split("T")[0] }}
+                                <img src="../../../assets/static/images/alarm-fill.svg" />
+                                {{ ongoingEvent.event_start.split("T")[1].slice(0, 5) }}
+                            </div>
+                            <b> ---------------></b>
+                            <div>
+                                <img src="../../../assets/static/images/calendar2-check-fill.svg" />
+                                {{ ongoingEvent.event_end.split("T")[0] }}
+                                <img src="../../../assets/static/images/alarm-fill.svg" />
+                                {{ ongoingEvent.event_end.split("T")[1].slice(0, 5) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container pt-5">
+    <div class="card">
+        <div class="card-header bg-dark text-center">
+            <div class="mx-auto text-light">
+                <h3>Completed Events</h3>
+            </div>
+        </div>
+        <div class="card-body border-bottom">
+            <div class="row">
+                <div class="col-md-4 mb-3" *ngFor="let afterEvent of afterEvents">
+                    <div class="card text-center">
+                        <h5 class="card-header">{{ afterEvent.title }}</h5>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <cite>{{ afterEvent.description }}</cite>
+                            </p>
+                            <div>
+                                <img src="../../../assets/static/images/calendar2-check-fill.svg" />
+                                {{ afterEvent.event_start.split("T")[0] }}
+                                <img src="../../../assets/static/images/alarm-fill.svg" />
+                                {{ afterEvent.event_start.split("T")[1].slice(0, 5) }}
+                            </div>
+                            <b> ---------------></b>
+                            <div>
+                                <img src="../../../assets/static/images/calendar2-check-fill.svg" />
+                                {{ afterEvent.event_end.split("T")[0] }}
+                                <img src="../../../assets/static/images/alarm-fill.svg" />
+                                {{ afterEvent.event_end.split("T")[1].slice(0, 5) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container pt-5 text-center">
+    <b>Wanna view all Events ?</b> -- <a routerLink="/viewEvents"> Click Here</a>
+</div>

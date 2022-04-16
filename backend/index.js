@@ -179,6 +179,56 @@ app.get("/event/:user_id",verifyToken, (req, res) => {
     });
 });
 
+// Before
+app.get("/event/before/:user_id",verifyToken, (req, res) => {
+    //console.log('getting event information');
+    let user_id = req.params.user_id;
+    let qr = `SELECT * FROM events WHERE user_id = '${user_id}' AND event_start > CURRENT_TIMESTAMP`;
+    db.query(qr, (err, result) => {
+        if (err) {
+            console.error(err, "error in select query");
+        }
+        if (result.length > 0) {
+            res.status(200).send({
+                data: result,
+            });
+        }
+    });
+});
+
+// ongoing
+app.get("/event/ongoing/:user_id",verifyToken, (req, res) => {
+    //console.log('getting event information');
+    let user_id = req.params.user_id;
+    let qr = `SELECT * FROM events WHERE user_id = '${user_id}' AND event_start < CURRENT_TIMESTAMP AND event_end > CURRENT_TIMESTAMP`;
+    db.query(qr, (err, result) => {
+        if (err) {
+            console.error(err, "error in select query");
+        }
+        if (result.length > 0) {
+            res.status(200).send({
+                data: result,
+            });
+        }
+    });
+});
+
+// After
+app.get("/event/after/:user_id",verifyToken, (req, res) => {
+    //console.log('getting event information');
+    let user_id = req.params.user_id;
+    let qr = `SELECT * FROM events WHERE user_id = '${user_id}'  AND event_end < CURRENT_TIMESTAMP`;
+    db.query(qr, (err, result) => {
+        if (err) {
+            console.error(err, "error in select after query");
+        }
+        if (result.length > 0) {
+            res.status(200).send({
+                data: result,
+            });
+        }
+    });
+});
 
 // Insert query API
 app.post("/event",verifyToken, (req, res) => {

@@ -5,8 +5,16 @@ img{
 	margin-right: 20px;
 }
 
+.nav-item{
+	padding-right: 10px;
+}
+.log{
+	position: absolute;	
+	right: 1em;
+}
+
 .content{
-	min-height: calc(100vh - 146px);
+	min-height: calc(100vh - 86px);
 }
 
 footer{
@@ -14,11 +22,4 @@ footer{
 	bottom:0;
 	width:100%;
 	height:35px;   
-}
-.nav-item{
-	padding-right: 10px;
-}
-.log{
-	position: absolute;	
-	right: 1em;
 }

@@ -1,7 +1,11 @@
 <header>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top scrolling-navbar">
         <img src="../../../assets/static/images/logo.png" routerLink="/" />
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a routerLink="/home"  class="nav-link">Home</a>
             </li>
@@ -13,6 +17,9 @@
             </li>
             <li class="nav-item" *ngIf= "apiService.loggedIn()">
                 <a routerLink="/viewUsers" class="nav-link">View Users</a>
+            </li>
+            <li class="nav-item" *ngIf= "apiService.loggedIn()">
+                <a routerLink="/getEvents" class="nav-link">Get Events</a>
             </li>
         </ul>
         <ul class="navbar-nav log" *ngIf= "!apiService.loggedIn()">
@@ -31,9 +38,10 @@
                 <a class="nav-link" (click) = "logout()">Logout</a>
             </li>
         </ul>
+    </div>
     </nav>
 </header>
-<div class="content">
+<div class="content pt-5">
     <router-outlet> </router-outlet>
 </div>
 

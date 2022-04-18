@@ -3,6 +3,8 @@ const bodyparser = require("body-parser");
 const cors = require("cors");
 const mysql = require("mysql2");
 const jwt = require("jsonwebtoken");
+const mailgun = require("mailgun-js");
+const DOMAIN = 'sandboxe8a00f82967c4d9687b9208590e9890d.mailgun.org';
 
 const app = express();
 app.use(cors());
@@ -11,6 +13,8 @@ app.use(bodyparser.json());
 require('dotenv').config();
 
 let api_key = process.env.API_KEY;
+const port = process.env.PORT || 3002;
+const mg = mailgun({apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN});
 
 //Mysql connect
 const db = mysql.createConnection({
@@ -113,20 +117,71 @@ app.get("/user/:id",(req,res) =>{
 
 // Insert query API
 app.post("/user", (req, res) => {
-    let name = req.body.name;
+    let payload = req.body;
     let email = req.body.email;
-    let password = req.body.password;
-    let address = req.body.address;
-    let zipCode = req.body.zipCode;
-    let qr = `INSERT INTO users(name, email, password, address, zipCode) VALUES ("${name}","${email}","${password}","${address}","${zipCode}")`;
-    db.query(qr, (err, result) => {
-        if (err) throw err;
-        console.log(result);
-        res.status(200).send({
-            message: "data Inserted",
-        });
+    let token = jwt.sign(payload,api_key);
+    const data = {
+        from: 'noreply@axiomio.com',
+        to: email,
+        subject: 'Email Verification',
+        html: `<h2> Click on the link to activate your account </h2>
+        <a href = 'http://localhost:4200/emailVerification/${token}'>Click Here</a>
+        `
+    };
+    mg.messages().send(data, (error, body) => {
+        if (error) throw error;
+        console.log(body);
+        
     });
+    
 });
+
+app.get("/activate/:token",(req,res)=>{
+    let token = req.params.token;
+    if(token){
+        jwt.verify(token,api_key,(err,decodedToken) => {
+            if (err){
+                res.status(401).send({
+                    message: 'Check again',
+                });
+                
+            }
+            let name = decodedToken.name;
+            let email = decodedToken.email;
+            let password = decodedToken.password;
+            let address = decodedToken.address;
+            let zipCode = decodedToken.zipCode;
+            let qr = `INSERT INTO users(name, email, password, address, zipCode) VALUES ("${name}","${email}","${password}","${address}","${zipCode}")`;
+            db.query(qr, (err, result) => {
+                if (err) throw err;
+                console.log(result);
+                res.status(200).send({
+                    message: "data Inserted",
+                });
+            });
+        });
+    } else{
+        res.status(200).send({
+           message: "Token not Available"
+        });
+   }
+});
+
+// app.post("/user", (req, res) => {
+//     let name = req.body.name;
+//     let email = req.body.email;
+//     let password = req.body.password;
+//     let address = req.body.address;
+//     let zipCode = req.body.zipCode;
+//     let qr = `INSERT INTO users(name, email, password, address, zipCode) VALUES ("${name}","${email}","${password}","${address}","${zipCode}")`;
+//     db.query(qr, (err, result) => {
+//         if (err) throw err;
+//         console.log(result);
+//         res.status(200).send({
+//             message: "data Inserted",
+//         });
+//     });
+// });
 
 //Update Query
 app.put("/user/:id",(req,res)=>{
@@ -269,6 +324,6 @@ app.delete("/event/:sno",verifyToken, (req, res) => {
     });
 });
 
-app.listen(3002, () => {
+app.listen(port, () => {
     console.log("Server running...");
 });

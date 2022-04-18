@@ -12,6 +12,7 @@ export class ApiService {
   apiurl = 'http://localhost:3002/event';
   userAPIurl = 'http://localhost:3002/user';
   loginAPIurl = 'http://localhost:3002/login';
+  emailVerifyrl = 'http://localhost:3002/activate';
 
   // Events
   // get data (view-events)
@@ -66,6 +67,11 @@ export class ApiService {
 
   loggedIn(){
     return !!localStorage.getItem('Bearer');
+  }
+
+  emailVerification(token:any):Observable<any>{
+    console.log(token);
+    return this._http.get(`${this.emailVerifyrl}/${token}`);
   }
 
 }

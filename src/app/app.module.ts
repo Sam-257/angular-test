@@ -25,6 +25,17 @@ import { ViewUsersComponent } from './myComponents/view-users/view-users.compone
 import { AuthGuard } from './common/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+import { GetEventsComponent } from './myComponents/get-events/get-events.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +52,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     NextDirective,
     PrevDirective,
     AddUserComponent,
-    ViewUsersComponent
+    ViewUsersComponent,
+    GetEventsComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -52,6 +65,17 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     HttpClientModule,
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
+    MatDatepickerModule,
+    MatInputModule,
+    NgxMatDatetimePickerModule, 
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
   ],
   providers: [
     ApiService,
@@ -60,7 +84,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
       provide: HTTP_INTERCEPTORS,
       useClass: DemoInterceptor,
       multi: true
-    }],
+    },
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,6 +8,8 @@ import { LoginComponent } from './myComponents/login/login.component';
 import { ViewEventsComponent } from './myComponents/view-events/view-events.component';
 import { ViewUsersComponent } from './myComponents/view-users/view-users.component';
 import { AuthGuard } from './common/auth.guard';
+import { GetEventsComponent } from './myComponents/get-events/get-events.component';
+import { EmailRedirectComponent } from './myComponents/email-redirect/email-redirect.component';
 
 
 const routes: Routes = [
@@ -47,7 +49,17 @@ const routes: Routes = [
         path: 'viewUsers',
         component: ViewUsersComponent,
         canActivate: [AuthGuard]
-      }
+      },
+      {
+        path: 'getEvents',
+        component: GetEventsComponent,
+        canActivate: [AuthGuard]
+      },{
+        path:'emailVerification/:token',
+        component: EmailRedirectComponent
+      },
+      
+      
     ]
   }
 ];

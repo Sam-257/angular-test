@@ -20,15 +20,17 @@ export class AddUserComponent implements OnInit {
     this.apiService.getSingleUserData(this.getParamId).subscribe({
       next:(res)=>{
         //console.log(res.data[0]);
-        this.user = res.data[0]
-        this.userForm.patchValue({
-          name:this.user.name,
-          email:this.user.email,
-          password:this.user.password,
-          confirmPassword: this.user.password,
-          address:this.user.address,
-          zipCode: this.user.zipCode
-        })
+        this.user = res.data[0];
+        if(this.user){
+          this.userForm.patchValue({
+            name:this.user.name,
+            email:this.user.email,
+            password:this.user.password,
+            confirmPassword: this.user.password,
+            address:this.user.address,
+            zipCode: this.user.zipCode
+          })
+        }
       },
       error:(err)=>console.error(err)
     })
@@ -75,12 +77,14 @@ export class AddUserComponent implements OnInit {
 
   // To check if the input value is actually changed or not
   notChanged(){
+    if(this.user){
     if(this.user.name == this.name?.value && this.user.address == this.address?.value && this.user.zipCode == this.zipCode?.value){
       this.updateValidator = true;
     } else{
       this.updateValidator = false;
     }
   }
+}
   userEdit(){
     this.apiService.updateUserData(this.getParamId,this.userForm.value).subscribe({
       next:(res)=>console.log(res),

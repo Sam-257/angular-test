@@ -1,3 +1,41 @@
+.full-width{
+    width: 100%;
+}
+
+.top-padding{
+    padding-top: 3px;
+}
+
+.margin-left mat-radio-button:not(:first-child){
+    margin-left:10px;
+}
+
 label{
-    font-weight: bold
+    font-weight: bold;
+    padding-bottom: 1px;
+    font-size: 1em;
+}
+
+.form-ele{
+    padding-left: 2em;
+    
+}
+
+
+mat-card-header{
+    background-color: #212529;
+    color: white;
+    font-size: 4em;
+    
+}
+mat-card-title{
+    margin-top: 1em;
+
+    color: white;
+    
+}
+
+button{
+    background-color:#3baee3;
+    color:white;
 }

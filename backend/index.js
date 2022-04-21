@@ -3,10 +3,18 @@ const bodyparser = require("body-parser");
 const cors = require("cors");
 const mysql = require("mysql2");
 const jwt = require("jsonwebtoken");
+const mailgun = require("mailgun-js");
+const DOMAIN = 'sandboxe8a00f82967c4d9687b9208590e9890d.mailgun.org';
 
 const app = express();
 app.use(cors());
 app.use(bodyparser.json());
+
+require('dotenv').config();
+
+let api_key = process.env.API_KEY;
+const port = process.env.PORT || 3002;
+const mg = mailgun({apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN});
 
 //Mysql connect
 const db = mysql.createConnection({
@@ -38,7 +46,7 @@ function verifyToken(req,res,next){
             message: "Unauthorized RequestAccess"
         });
     }
-    let payload = jwt.verify(token,'secretKey');
+    let payload = jwt.verify(token,api_key);
     if(!payload){
         return res.status(401).send({
             message: "Unauthorized RequestAccess"
@@ -69,7 +77,7 @@ app.post("/login",(req,res)=>{
             })
         } else{
             let payload = {subject: result[0].id};
-            let Bearer = jwt.sign(payload,'secretKey');
+            let Bearer = jwt.sign(payload,api_key);
             res.status(200).send({
                 message: 'Allow login',
                 auth: true,
@@ -109,20 +117,71 @@ app.get("/user/:id",(req,res) =>{
 
 // Insert query API
 app.post("/user", (req, res) => {
-    let name = req.body.name;
+    let payload = req.body;
     let email = req.body.email;
-    let password = req.body.password;
-    let address = req.body.address;
-    let zipCode = req.body.zipCode;
-    let qr = `INSERT INTO users(name, email, password, address, zipCode) VALUES ("${name}","${email}","${password}","${address}","${zipCode}")`;
-    db.query(qr, (err, result) => {
-        if (err) throw err;
-        console.log(result);
-        res.status(200).send({
-            message: "data Inserted",
-        });
+    let token = jwt.sign(payload,api_key);
+    const data = {
+        from: 'noreply@axiomio.com',
+        to: email,
+        subject: 'Email Verification',
+        html: `<h2> Click on the link to activate your account </h2>
+        <a href = 'http://localhost:4200/emailVerification/${token}'>Click Here</a>
+        `
+    };
+    mg.messages().send(data, (error, body) => {
+        if (error) throw error;
+        console.log(body);
+        
     });
+    
 });
+
+app.get("/activate/:token",(req,res)=>{
+    let token = req.params.token;
+    if(token){
+        jwt.verify(token,api_key,(err,decodedToken) => {
+            if (err){
+                res.status(401).send({
+                    message: 'Check again',
+                });
+                
+            }
+            let name = decodedToken.name;
+            let email = decodedToken.email;
+            let password = decodedToken.password;
+            let address = decodedToken.address;
+            let zipCode = decodedToken.zipCode;
+            let qr = `INSERT INTO users(name, email, password, address, zipCode) VALUES ("${name}","${email}","${password}","${address}","${zipCode}")`;
+            db.query(qr, (err, result) => {
+                if (err) throw err;
+                console.log(result);
+                res.status(200).send({
+                    message: "data Inserted",
+                });
+            });
+        });
+    } else{
+        res.status(200).send({
+           message: "Token not Available"
+        });
+   }
+});
+
+// app.post("/user", (req, res) => {
+//     let name = req.body.name;
+//     let email = req.body.email;
+//     let password = req.body.password;
+//     let address = req.body.address;
+//     let zipCode = req.body.zipCode;
+//     let qr = `INSERT INTO users(name, email, password, address, zipCode) VALUES ("${name}","${email}","${password}","${address}","${zipCode}")`;
+//     db.query(qr, (err, result) => {
+//         if (err) throw err;
+//         console.log(result);
+//         res.status(200).send({
+//             message: "data Inserted",
+//         });
+//     });
+// });
 
 //Update Query
 app.put("/user/:id",(req,res)=>{
@@ -159,9 +218,10 @@ app.delete("/user/:id", (req, res) => {
 
 // API for events---------------------------------------------
 // Select query API
-app.get("/event",verifyToken, (req, res) => {
+app.get("/event/:user_id",verifyToken, (req, res) => {
     //console.log('getting event information');
-    let qr = "SELECT * FROM events";
+    let user_id = req.params.user_id;
+    let qr = `SELECT * FROM events WHERE user_id = '${user_id}'`;
     db.query(qr, (err, result) => {
         if (err) {
             console.error(err, "error in select query");
@@ -174,18 +234,74 @@ app.get("/event",verifyToken, (req, res) => {
     });
 });
 
+// Before
+app.get("/event/before/:user_id",verifyToken, (req, res) => {
+    //console.log('getting event information');
+    let user_id = req.params.user_id;
+    let qr = `SELECT * FROM events WHERE user_id = '${user_id}' AND event_start > CURRENT_TIMESTAMP`;
+    db.query(qr, (err, result) => {
+        if (err) {
+            console.error(err, "error in select query");
+        }
+        if (result.length > 0) {
+            res.status(200).send({
+                data: result,
+            });
+        }
+    });
+});
+
+// ongoing
+app.get("/event/ongoing/:user_id",verifyToken, (req, res) => {
+    //console.log('getting event information');
+    let user_id = req.params.user_id;
+    let qr = `SELECT * FROM events WHERE user_id = '${user_id}' AND event_start < CURRENT_TIMESTAMP AND event_end > CURRENT_TIMESTAMP`;
+    db.query(qr, (err, result) => {
+        if (err) {
+            console.error(err, "error in select query");
+        }
+        if (result.length > 0) {
+            res.status(200).send({
+                data: result,
+            });
+        }
+    });
+});
+
+// After
+app.get("/event/after/:user_id",verifyToken, (req, res) => {
+    //console.log('getting event information');
+    let user_id = req.params.user_id;
+    let qr = `SELECT * FROM events WHERE user_id = '${user_id}'  AND event_end < CURRENT_TIMESTAMP`;
+    db.query(qr, (err, result) => {
+        if (err) {
+            console.error(err, "error in select after query");
+        }
+        if (result.length > 0) {
+            res.status(200).send({
+                data: result,
+            });
+        }
+    });
+});
 
 // Insert query API
 app.post("/event",verifyToken, (req, res) => {
     let title = req.body.title;
     let description = req.body.description;
-    let active = 1;
-    if (title == undefined || description == undefined) {
+    let user_id = req.body.user_id;
+    let event_start = req.body.event_start;
+    let event_end = req.body.event_end;
+    event_start = event_start.replace('T',' ');
+    event_start = event_start.replace('.000Z','');
+    event_end = event_end.replace('T',' ');
+    event_end = event_end.replace('.000Z','');
+    if (title == undefined || description == undefined || title == '' || description == '') {
         res.status(401).send({
             message: "Invalid Data",
         });
     } else {
-        let qr = `INSERT INTO events(title, description, active) VALUES ('${title}','${description}','${active}')`;
+        let qr = `INSERT INTO events(title, description, user_id, event_start, event_end) VALUES ('${title}','${description}','${user_id}','${event_start}','${event_end}')`;
         db.query(qr, (err, result) => {
             if (err) throw err;
             console.log(result);
@@ -208,6 +324,6 @@ app.delete("/event/:sno",verifyToken, (req, res) => {
     });
 });
 
-app.listen(3002, () => {
+app.listen(port, () => {
     console.log("Server running...");
 });

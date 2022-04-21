@@ -12,11 +12,24 @@ export class ApiService {
   apiurl = 'http://localhost:3002/event';
   userAPIurl = 'http://localhost:3002/user';
   loginAPIurl = 'http://localhost:3002/login';
+  emailVerifyrl = 'http://localhost:3002/activate';
 
   // Events
   // get data (view-events)
   getData(user_id:any):Observable<any>{
     return this._http.get(`${this.apiurl}/${user_id}`);
+  }
+
+  getBeforeEvents(user_id:any):Observable<any>{
+    return this._http.get(`${this.apiurl}/before/${user_id}`);
+  }
+
+  getOngoingEvents(user_id:any):Observable<any>{
+    return this._http.get(`${this.apiurl}/ongoing/${user_id}`);
+  }
+
+  getAfterEvents(user_id:any):Observable<any>{
+    return this._http.get(`${this.apiurl}/after/${user_id}`);
   }
 
   //add data (add-events)
@@ -54,6 +67,11 @@ export class ApiService {
 
   loggedIn(){
     return !!localStorage.getItem('Bearer');
+  }
+
+  emailVerification(token:any):Observable<any>{
+    console.log(token);
+    return this._http.get(`${this.emailVerifyrl}/${token}`);
   }
 
 }
